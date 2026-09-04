@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" 
+     width="512" 
+     height="512" 
+     viewBox="0 0 512 512" 
+     fill="none">
+
+  <g fill="#ffffff">
+
+    <!-- Film reels -->
+    <circle cx="160" cy="120" r="70"/>
+    <circle cx="350" cy="120" r="90"/>
+
+    <!-- Reel holes -->
+    <circle cx="160" cy="120" r="15" fill="transparent"/>
+    <circle cx="125" cy="90" r="12" fill="transparent"/>
+    <circle cx="195" cy="90" r="12" fill="transparent"/>
+    <circle cx="125" cy="150" r="12" fill="transparent"/>
+    <circle cx="195" cy="150" r="12" fill="transparent"/>
+
+    <circle cx="350" cy="120" r="18" fill="transparent"/>
+    <circle cx="305" cy="80" r="14" fill="transparent"/>
+    <circle cx="395" cy="80" r="14" fill="transparent"/>
+    <circle cx="305" cy="160" r="14" fill="transparent"/>
+    <circle cx="395" cy="160" r="14" fill="transparent"/>
+
+    <!-- Camera body -->
+    <rect x="110" y="190" width="280" height="170" rx="35"/>
+
+    <!-- Play button cutout -->
+    <path d="M220 240 L220 310 L300 275 Z" fill="transparent"/>
+
+    <!-- Lens -->
+    <path d="M390 235 L470 190 V350 L390 315 Z"/>
+
+    <!-- Tripod -->
+    <rect x="220" y="360" width="70" height="30" rx="10"/>
+
+    <path d="M255 390 L180 500 H220 L255 440 L290 500 H330 Z"/>
+
+  </g>
+
+</svg>
