@@ -15,10 +15,12 @@ import MovieDetails from "./movieDetailsComponents/MovieDetails";
 import MovieCast from "./movieDetailsComponents/MovieCast";
 import TvShowsCast from "./tvDetailsComponents/TvShowsCast";
 import NotFound from "./components/NotFound";
+import ScrollToTop from "./components/utils/ScrollToTop";
 
 const App = () => {
   return (
     <div className="w-full min-h-screen bg-[#222] text-white">
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/trending" element={<Trending />} />
