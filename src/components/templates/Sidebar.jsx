@@ -64,14 +64,16 @@ const Sidebar = () => {
 
   return (
     <>
-      {/* Mobile Toggle Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2.5 rounded-xl bg-zinc-900/90 backdrop-blur-md border border-zinc-800 text-white shadow-xl hover:border-zinc-700 transition cursor-pointer"
-        aria-label="Toggle Navigation"
-      >
-        {isOpen ? <RxCross2 size={20} /> : <BiMenu size={20} />}
-      </button>
+      {/* Mobile Hamburger Button (visible when sidebar is closed) */}
+      {!isOpen && (
+        <button
+          onClick={() => setIsOpen(true)}
+          className="lg:hidden fixed top-4 left-4 z-50 p-2.5 rounded-xl bg-zinc-900/90 backdrop-blur-md border border-zinc-800 text-white shadow-xl hover:border-zinc-700 transition cursor-pointer"
+          aria-label="Open Navigation"
+        >
+          <BiMenu size={20} />
+        </button>
+      )}
 
       {isOpen && (
         <div
@@ -81,11 +83,11 @@ const Sidebar = () => {
       )}
 
       <aside
-        className={`fixed left-0 top-0 w-[260px] sm:w-[280px] h-screen bg-[#0E0E11] border-r border-zinc-800 flex flex-col z-50 overflow-y-auto scrollbar-none transition-transform duration-300 ${
+        className={`fixed left-0 top-0 w-[260px] sm:w-[280px] h-dvh bg-[#0E0E11] border-r border-zinc-800 flex flex-col z-50 overflow-y-auto scrollbar-none transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
-        <div className="px-5 pt-4 pb-3">
+        <div className="px-5 pt-4 pb-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <BiCameraMovie className="text-2xl md:text-3xl text-white" />
             <div>
@@ -95,6 +97,15 @@ const Sidebar = () => {
               <p className="text-xs text-zinc-500">Discover Movies</p>
             </div>
           </div>
+
+          {/* Dedicated Close Button inside Mobile Sidebar Header */}
+          <button
+            onClick={() => setIsOpen(false)}
+            className="lg:hidden flex items-center justify-center rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-800/60 transition cursor-pointer"
+            aria-label="Close Sidebar"
+          >
+            <RxCross2 size={22} />
+          </button>
         </div>
 
         <hr className="border-zinc-800" />

@@ -63,7 +63,7 @@ const PersonDetails = () => {
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
         }}
-        className="w-full pb-8 sm:pb-12 relative"
+        className="w-full pb-4 sm:pb-12 relative"
       >
         <div className="px-4 md:px-10 py-7">
           <button

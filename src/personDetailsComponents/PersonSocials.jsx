@@ -19,7 +19,7 @@ const SocialButton = ({ href, icon, label }) => {
 
 const PersonSocials = ({ externalids }) => {
   return (
-    <section className="px-4 md:px-10 py-7">
+    <section className="px-4 md:px-10 pt-7 pb-3">
       <h2 className="text-xl md:text-3xl font-bold mb-6">Social Links</h2>
 
       <div className="flex flex-wrap gap-4">

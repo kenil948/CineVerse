@@ -20,7 +20,7 @@ const PersonFilmography = ({
   }, [activeTab, movieData, tvData]);
 
   return (
-    <section className="px-4 md:px-10">
+    <section className="px-4 md:px-10 pt-5">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 md:mb-8">
         <div>
           <h2 className="text-2xl md:text-4xl font-black text-white">

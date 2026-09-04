@@ -139,10 +139,10 @@ const MovieDetails = () => {
           <MovieHero movie={info.detail} director={info.director} />
           <MovieStats movie={info.detail} />
         </div>
-        <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-[#111] to-transparent pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-full h-10 bg-gradient-to-t from-[#111] to-transparent pointer-events-none"></div>
       </div>
 
-      <div className="bg-[#111] px-4 md:px-10 py-10 space-y-10">
+      <div className="bg-[#111] px-4 md:px-10 pt-4 pb-10 space-y-8">
         <ProductionCompanies companies={info.detail.production_companies} />
         {info.cast?.length > 0 && (
           <section>

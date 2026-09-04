@@ -1,49 +1,25 @@
 import React, { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   MdKeyboardArrowLeft,
   MdArrowForward,
   MdMovie,
   MdEmail,
+  MdAccessTime,
+  MdHandshake,
+  MdReportProblem,
 } from "react-icons/md";
-import { IoChatbubbleEllipses } from "react-icons/io5";
-import { FaStar } from "react-icons/fa";
-import toast from "react-hot-toast";
+import { IoChatbubbleEllipses, IoSparkles } from "react-icons/io5";
+import { PiTelevisionFill } from "react-icons/pi";
 import { FiPlus } from "react-icons/fi";
+import toast from "react-hot-toast";
 
 const Contact = () => {
-  const faqs = [
-    {
-      question: "How long does it take to receive a reply?",
-      answer:
-        "We usually respond within one business day. During weekends or holidays, replies may take a little longer.",
-    },
-    {
-      question: "Can I report incorrect movie information?",
-      answer:
-        "Absolutely. If you notice incorrect details about a movie, TV show or person, send us the information and we'll review it.",
-    },
-    {
-      question: "Can I suggest new features?",
-      answer:
-        "Yes. We love hearing ideas from our community. Your suggestions help us improve CineVerse and build a better experience.",
-    },
-    {
-      question: "Is CineVerse free to use?",
-      answer:
-        "Yes. CineVerse is completely free and designed to help movie lovers discover films, television shows and talented creators from around the world.",
-    },
-  ];
-
   const navigate = useNavigate();
+  const location = useLocation();
   const formRef = useRef(null);
 
   const [openFAQ, setOpenFAQ] = useState(null);
-
-  const toggleFAQ = (index) => {
-    setOpenFAQ(openFAQ === index ? null : index);
-  };
-
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -53,6 +29,10 @@ const Contact = () => {
     message: "",
   });
 
+  const toggleFAQ = (index) => {
+    setOpenFAQ(openFAQ === index ? null : index);
+  };
+
   const scrollToForm = () => {
     formRef.current?.scrollIntoView({
       behavior: "smooth",
@@ -61,7 +41,6 @@ const Contact = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -82,7 +61,6 @@ const Contact = () => {
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
     if (!emailRegex.test(email)) {
       toast.error("Please enter a valid email address.");
       return false;
@@ -110,349 +88,432 @@ const Contact = () => {
 
     setTimeout(() => {
       toast.success("Message sent successfully!");
-
       setFormData({
         name: "",
         email: "",
         subject: "",
         message: "",
       });
-
       setLoading(false);
     }, 1200);
   };
+
+  const faqs = [
+    {
+      question: "Where does CineVerse get its movie data?",
+      answer:
+        "CineVerse uses TMDB (The Movie Database) API to provide movie, television, cast, crew, and entertainment metadata.",
+    },
+    {
+      question: "Can I watch movies directly on CineVerse?",
+      answer:
+        "No. CineVerse helps users discover movies, TV shows, actors, and trailers.",
+    },
+    {
+      question: "Is CineVerse free to use?",
+      answer: "Yes. CineVerse is completely free for everyone.",
+    },
+    {
+      question: "How often is content updated?",
+      answer: "Content is updated in real time through TMDB integration.",
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-[#222222]">
-      <section className="relative overflow-hidden px-4 md:px-10 pt-7 pb-15">
-        <div className="absolute left-1/2 top-30 -translate-x-1/2 h-[850px] w-[850px] rounded-full bg-[#C1121F]/8 blur-[170px] pointer-events-none" />
-
-        <div className="absolute bottom-0 right-0 h-[420px] w-[420px] rounded-full bg-[#C1121F]/5 blur-[140px] pointer-events-none" />
-
-        <MdEmail className="hidden lg:block absolute top-36 left-24 text-white/5 text-8xl -rotate-12 pointer-events-none" />
-
-        <IoChatbubbleEllipses className="hidden lg:block absolute top-48 right-28 text-white/5 text-7xl rotate-12 pointer-events-none" />
-
-        <FaStar className="hidden lg:block absolute bottom-28 left-40 text-white/5 text-6xl rotate-12 pointer-events-none" />
-
-        <MdMovie className="hidden lg:block absolute bottom-28 right-40 text-white/5 text-7xl -rotate-12 pointer-events-none" />
-
+    <div className="min-h-screen bg-[#18181b] text-white selection:bg-[#C1121F] selection:text-white">
+      {/* Container Wrapper */}
+      <div className="px-4 md:px-10 py-7 max-w-7xl mx-auto">
+        {/* ================================================== */}
+        {/* SECTION 1 — NAVIGATION (BACK BUTTON) */}
+        {/* ================================================== */}
         <button
-          onClick={() => navigate("/")}
-          className="group relative z-20 inline-flex items-center gap-1 text-zinc-400 transition-colors duration-300 hover:text-white cursor-pointer"
+          onClick={() => {
+            if (window.history.length > 1) {
+              navigate(-1);
+            } else {
+              navigate(location.state?.from || "/");
+            }
+          }}
+          className="group inline-flex items-center gap-0.5 text-zinc-400 hover:text-white transition-colors duration-300 mb-6 cursor-pointer"
         >
           <span className="transition-transform duration-300 group-hover:-translate-x-1">
             <MdKeyboardArrowLeft size={20} />
           </span>
-
           <span className="text-base font-medium">Back</span>
         </button>
 
-        <div className="relative z-10 mx-auto mt-6 md:mt-10 flex min-h-[60vh] md:min-h-[72vh] max-w-4xl flex-col items-center justify-center text-center">
-          <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.35em] text-zinc-500">
-            Get In Touch
-          </p>
+        {/* ================================================== */}
+        {/* SECTION 2 — HERO */}
+        {/* ================================================== */}
+        <section className="relative py-8 md:py-16 overflow-hidden text-center">
+          {/* Ambient Glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] md:w-[700px] h-[350px] md:h-[450px] bg-[#C1121F]/10 blur-[180px] rounded-full pointer-events-none" />
 
-          <h1 className="mt-4 md:mt-5 text-2xl sm:text-4xl md:text-5xl font-bold leading-[1.15] text-white lg:text-6xl">
-            Let's Start
-            <br />
-            The Conversation.
-          </h1>
-
-          <p className="mt-6 md:mt-8 max-w-xl text-base md:text-lg leading-7 md:leading-9 text-zinc-300">
-            Whether you have a question, feedback or simply want to say hello,
-            we'd love to hear from you. Great conversations often begin with a
-            shared love for great stories.
-          </p>
-
-          <button
-            onClick={scrollToForm}
-            className="group mt-8 md:mt-10 inline-flex items-center gap-2 rounded-xl bg-[#C1121F] px-7 py-4 font-semibold text-white transition-all duration-300 hover:bg-[#a20f1a] hover:scale-105 hover:shadow-xl hover:shadow-[#C1121F]/30 active:scale-95 cursor-pointer"
-          >
-            Send a Message
-            <MdArrowForward
-              size={20}
-              className="transition-all duration-300 group-hover:translate-x-1 group-hover:-rotate-12"
-            />
-          </button>
-        </div>
-
-        <div className="absolute bottom-0 left-0 h-40 w-full bg-gradient-to-b from-transparent to-[#222222]" />
-      </section>
-      <section ref={formRef} className="relative px-4 md:px-10 py-10 pb-20">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:gap-16 lg:grid-cols-2">
-          <div className="flex flex-col justify-center">
-            <div className="flex items-center gap-4">
-              <div className="h-px w-20 bg-[#C1121F]" />
-
-              <p className="text-sm font-semibold uppercase tracking-[0.45em] text-[#C1121F]">
-                Get In Touch
-              </p>
+          <div className="relative z-10 max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#C1121F]/15 border border-[#C1121F]/30 text-[#C1121F] text-xs sm:text-sm font-semibold tracking-wider uppercase mb-5">
+              <IoSparkles size={16} />
+              <span>GET IN TOUCH</span>
             </div>
 
-            <h2 className="mt-6 text-xl md:text-3xl md:text-5xl font-bold leading-[1.15] text-white">
-              We'd Love
-              <br />
-              To Hear From You.
-            </h2>
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-white leading-tight tracking-tight">
+              Let's Talk About Great Stories.
+            </h1>
 
-            <p className="mt-6 max-w-xl text-lg leading-9 text-zinc-300">
-              Whether you have feedback, questions or simply want to say hello,
-              our inbox is always open. Every message helps us improve CineVerse
-              and make discovering great stories even better.
+            <p className="mt-5 max-w-2xl mx-auto text-base sm:text-lg text-zinc-300 leading-relaxed font-normal">
+              Whether you have feedback, feature ideas, bug reports, partnership
+              opportunities, or simply want to connect, we'd love to hear from
+              you.
             </p>
-            <div className="mt-12 h-px w-full bg-zinc-800" />
-            <div className="mt-15 space-y-2">
-              <div className="group flex min-h-24 items-start gap-5 rounded-2xl p-4 transition-all duration-300 hover:bg-zinc-900/40">
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#C1121F]/10 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6">
-                  <MdEmail size={26} className="text-[#C1121F]" />
-                </div>
 
-                <div>
-                  <h3 className="mb-2 text-xl font-semibold text-white">
-                    Email
-                  </h3>
+            <div className="mt-8 flex items-center justify-center">
+              <button
+                onClick={scrollToForm}
+                className="group flex items-center gap-3 px-7 py-3.5 rounded-xl bg-[#C1121F] hover:bg-[#A50F1A] text-white font-semibold text-base transition-all duration-300 active:scale-95 cursor-pointer"
+              >
+                <span>Send a Message</span>
+                <MdArrowForward
+                  size={20}
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                />
+              </button>
+            </div>
 
-                  <a
-                    href="mailto:support@cineverse.com"
-                    className="text-zinc-400 transition-colors hover:text-white"
-                  >
-                    support@cineverse.com
-                  </a>
+            {/* Additional Hero Chips */}
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+              <span className="px-4 py-1.5 rounded-full border border-white/10 bg-zinc-900/50 text-zinc-400 text-xs font-medium">
+                Feedback
+              </span>
+              <span className="px-4 py-1.5 rounded-full border border-white/10 bg-zinc-900/50 text-zinc-400 text-xs font-medium">
+                Feature Requests
+              </span>
+              <span className="px-4 py-1.5 rounded-full border border-white/10 bg-zinc-900/50 text-zinc-400 text-xs font-medium">
+                Bug Reports
+              </span>
+              <span className="px-4 py-1.5 rounded-full border border-white/10 bg-zinc-900/50 text-zinc-400 text-xs font-medium">
+                Partnerships
+              </span>
+            </div>
+          </div>
+        </section>
+
+        {/* ================================================== */}
+        {/* SECTION 3 — CONTACT INFORMATION */}
+        {/* ================================================== */}
+        <section className="py-12 md:py-16 border-t border-zinc-800/60">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Card 1 */}
+            <div className="group rounded-2xl bg-[#27272a]/40 border border-white/5 p-6 transition-all duration-300 hover:border-[#C1121F]/40 hover:-translate-y-1 flex flex-col justify-between">
+              <div>
+                <div className="w-12 h-12 rounded-xl bg-[#C1121F]/15 flex items-center justify-center text-[#C1121F] mb-4">
+                  <MdEmail size={24} />
                 </div>
+                <span className="text-xs font-medium uppercase tracking-wider text-zinc-500">
+                  Email
+                </span>
+                <h3 className="text-xl font-bold text-white mt-1">
+                  support@cineverse.com
+                </h3>
+                <p className="mt-2 text-zinc-400 text-sm leading-relaxed">
+                  Reach us directly for questions and feedback.
+                </p>
               </div>
+            </div>
 
-              <div className="group flex min-h-24 items-start gap-5 rounded-2xl p-4 transition-all duration-300 hover:bg-zinc-900/40">
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#C1121F]/10 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6">
-                  <IoChatbubbleEllipses size={26} className="text-[#C1121F]" />
+            {/* Card 2 */}
+            <div className="group rounded-2xl bg-[#27272a]/40 border border-white/5 p-6 transition-all duration-300 hover:border-[#C1121F]/40 hover:-translate-y-1 flex flex-col justify-between">
+              <div>
+                <div className="w-12 h-12 rounded-xl bg-[#C1121F]/15 flex items-center justify-center text-[#C1121F] mb-4">
+                  <MdAccessTime size={24} />
                 </div>
-
-                <div>
-                  <h3 className="text-xl font-semibold text-white">
-                    Response Time
-                  </h3>
-
-                  <p className="mt-2 text-zinc-400">
-                    We usually respond within one business day.
-                  </p>
-                </div>
+                <span className="text-xs font-medium uppercase tracking-wider text-zinc-500">
+                  Response Time
+                </span>
+                <h3 className="text-xl font-bold text-white mt-1">
+                  Within 24 Hours
+                </h3>
+                <p className="mt-2 text-zinc-400 text-sm leading-relaxed">
+                  We aim to respond quickly to all inquiries.
+                </p>
               </div>
+            </div>
 
-              <div className="group flex min-h-24 items-start gap-5 rounded-2xl p-4 transition-all duration-300 hover:bg-zinc-900/40">
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#C1121F]/10 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6">
-                  <MdMovie size={26} className="text-[#C1121F]" />
+            {/* Card 3 */}
+            <div className="group rounded-2xl bg-[#27272a]/40 border border-white/5 p-6 transition-all duration-300 hover:border-[#C1121F]/40 hover:-translate-y-1 flex flex-col justify-between">
+              <div>
+                <div className="w-12 h-12 rounded-xl bg-[#C1121F]/15 flex items-center justify-center text-[#C1121F] mb-4">
+                  <MdMovie size={24} />
                 </div>
-
-                <div>
-                  <h3 className="text-xl font-semibold text-white">
-                    CineVerse
-                  </h3>
-
-                  <p className="mt-2 text-zinc-400">
-                    Built for movie lovers around the world.
-                  </p>
-                </div>
+                <span className="text-xs font-medium uppercase tracking-wider text-zinc-500">
+                  CineVerse
+                </span>
+                <h3 className="text-xl font-bold text-white mt-1">
+                  Built For Movie Lovers Worldwide
+                </h3>
+                <p className="mt-2 text-zinc-400 text-sm leading-relaxed">
+                  Helping users discover amazing stories every day.
+                </p>
               </div>
             </div>
           </div>
+        </section>
 
-          <div className="relative">
-            <div className="absolute inset-0 rounded-3xl bg-[#C1121F]/5 blur-3xl" />
+        {/* ================================================== */}
+        {/* SECTION 4 — CONTACT FORM */}
+        {/* ================================================== */}
+        <section ref={formRef} className="py-12 md:py-16 border-t border-zinc-800/60">
+          <div className="max-w-3xl mx-auto rounded-3xl bg-[#27272a]/40 border border-white/5 p-6 sm:p-10 shadow-2xl relative">
+            <div className="inline-flex items-center gap-2 text-[#C1121F] font-semibold text-xs sm:text-sm tracking-[0.2em] uppercase mb-2">
+              <div className="h-px w-6 bg-[#C1121F]" />
+              <span>CONTACT FORM</span>
+            </div>
 
-            <div className="relative rounded-3xl border border-zinc-800 bg-zinc-900/60 p-9 transition-all duration-300 hover:border-[#C1121F]/20 hover:shadow-xl hover:shadow-black/20">
-              <h3 className="text-xl md:text-3xl font-semibold text-white">
-                Send Us A Message
-              </h3>
+            <h2 className="text-2xl sm:text-4xl font-bold text-white">
+              Send Us A Message
+            </h2>
+            <p className="mt-2 text-zinc-400 text-sm sm:text-base">
+              We'll get back to you as soon as possible.
+            </p>
 
-              <p className="mt-3 text-zinc-400">
-                Fill out the form below and we'll get back to you as soon as
-                possible.
-              </p>
-
-              <form onSubmit={handleSubmit} className="mt-8 space-y-7">
+            <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-zinc-300">
-                    Name <span className="text-[#C1121F]">*</span>
+                  <label className="block text-xs sm:text-sm font-medium text-zinc-300 mb-2">
+                    Full Name <span className="text-[#C1121F]">*</span>
                   </label>
-
                   <input
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="Enter your name"
-                    className="w-full rounded-xl border border-zinc-700 bg-[#222222] px-5 py-4 text-white outline-none transition-all duration-300 placeholder:text-zinc-600 focus:border-[#C1121F] focus:bg-zinc-900 focus:ring-2 focus:ring-[#C1121F]/20"
+                    placeholder="Enter your full name"
+                    className="w-full bg-[#18181b] border border-white/10 rounded-xl text-white focus:border-[#C1121F] focus:ring-1 focus:ring-[#C1121F] outline-none px-4 py-3 text-sm placeholder:text-zinc-600 transition-colors duration-300"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-zinc-300">
-                    Email <span className="text-[#C1121F]">*</span>
+                  <label className="block text-xs sm:text-sm font-medium text-zinc-300 mb-2">
+                    Email Address <span className="text-[#C1121F]">*</span>
                   </label>
-
                   <input
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="Enter your email"
-                    className="w-full rounded-xl border border-zinc-700 bg-[#222222] px-5 py-4 text-white outline-none transition-all duration-300 placeholder:text-zinc-600 focus:border-[#C1121F] focus:bg-zinc-900 focus:ring-2 focus:ring-[#C1121F]/20"
+                    placeholder="name@example.com"
+                    className="w-full bg-[#18181b] border border-white/10 rounded-xl text-white focus:border-[#C1121F] focus:ring-1 focus:ring-[#C1121F] outline-none px-4 py-3 text-sm placeholder:text-zinc-600 transition-colors duration-300"
                   />
                 </div>
+              </div>
 
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-zinc-300">
-                    Subject <span className="text-[#C1121F]">*</span>
-                  </label>
+              <div>
+                <label className="block text-xs sm:text-sm font-medium text-zinc-300 mb-2">
+                  Subject <span className="text-[#C1121F]">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  placeholder="What is this regarding?"
+                  className="w-full bg-[#18181b] border border-white/10 rounded-xl text-white focus:border-[#C1121F] focus:ring-1 focus:ring-[#C1121F] outline-none px-4 py-3 text-sm placeholder:text-zinc-600 transition-colors duration-300"
+                />
+              </div>
 
-                  <input
-                    type="text"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    placeholder="Subject"
-                    className="w-full rounded-xl border border-zinc-700 bg-[#222222] px-5 py-4 text-white outline-none transition-all duration-300 placeholder:text-zinc-600 focus:border-[#C1121F] focus:bg-zinc-900 focus:ring-2 focus:ring-[#C1121F]/20"
+              <div>
+                <label className="block text-xs sm:text-sm font-medium text-zinc-300 mb-2">
+                  Message <span className="text-[#C1121F]">*</span>
+                </label>
+                <textarea
+                  rows={5}
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="Write your message here..."
+                  className="w-full bg-[#18181b] border border-white/10 rounded-xl text-white focus:border-[#C1121F] focus:ring-1 focus:ring-[#C1121F] outline-none px-4 py-3 text-sm placeholder:text-zinc-600 resize-none transition-colors duration-300"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="group flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-[#C1121F] hover:bg-[#a50f1a] text-white font-semibold text-base transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed active:scale-95 cursor-pointer"
+              >
+                <span>{loading ? "Sending..." : "Send Message"}</span>
+                {!loading && (
+                  <MdArrowForward
+                    size={20}
+                    className="transition-transform duration-300 group-hover:translate-x-1"
                   />
-                </div>
+                )}
+              </button>
+            </form>
+          </div>
+        </section>
 
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-zinc-300">
-                    Message <span className="text-[#C1121F]">*</span>
-                  </label>
+        {/* ================================================== */}
+        {/* SECTION 5 — FAQ */}
+        {/* ================================================== */}
+        <section className="py-12 md:py-16 border-t border-zinc-800/60">
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center justify-center gap-2 text-[#C1121F] font-semibold text-xs sm:text-sm tracking-[0.2em] uppercase">
+                <div className="h-px w-6 bg-[#C1121F]" />
+                <span>FAQ</span>
+                <div className="h-px w-6 bg-[#C1121F]" />
+              </div>
+              <h2 className="mt-3 text-2xl sm:text-4xl font-bold text-white">
+                Frequently Asked Questions
+              </h2>
+            </div>
 
-                  <textarea
-                    rows={6}
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="Write your message..."
-                    className="w-full resize-none rounded-xl border border-zinc-700 bg-[#222222] px-5 py-4 text-white outline-none transition-all duration-300 placeholder:text-zinc-600 focus:border-[#C1121F] focus:bg-zinc-900 focus:ring-2 focus:ring-[#C1121F]/20"
-                  />
-                </div>
+            <div className="space-y-4">
+              {faqs.map((faq, index) => {
+                const isOpen = openFAQ === index;
+                return (
+                  <div
+                    key={index}
+                    className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
+                      isOpen
+                        ? "bg-[#C1121F]/5 border-[#C1121F]/40"
+                        : "bg-[#27272a]/40 border-white/5 hover:border-white/20"
+                    }`}
+                  >
+                    <button
+                      onClick={() => toggleFAQ(index)}
+                      className="w-full flex items-center justify-between p-5 text-left cursor-pointer gap-4"
+                    >
+                      <span className="font-semibold text-white text-base sm:text-lg">
+                        {faq.question}
+                      </span>
+                      <div
+                        className={`w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-300 shrink-0 transition-transform duration-300 ${
+                          isOpen ? "rotate-45 text-[#C1121F]" : ""
+                        }`}
+                      >
+                        <FiPlus size={18} />
+                      </div>
+                    </button>
 
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#C1121F] px-7 py-4 font-semibold text-white transition-all duration-300 hover:bg-[#a20f1a] hover:shadow-xl hover:shadow-[#C1121F]/30 disabled:cursor-not-allowed disabled:opacity-70"
-                >
-                  {loading ? "Sending..." : "Send Message"}
-
-                  {!loading && (
-                    <MdArrowForward
-                      size={20}
-                      className="transition-all duration-300 group-hover:translate-x-1 group-hover:-rotate-12"
-                    />
-                  )}
-                </button>
-              </form>
+                    <div
+                      className={`grid transition-all duration-300 ease-in-out ${
+                        isOpen
+                          ? "grid-rows-[1fr] opacity-100 border-t border-white/5"
+                          : "grid-rows-[0fr] opacity-0 border-t border-transparent"
+                      }`}
+                    >
+                      <div className="overflow-hidden">
+                        <p className="px-5 py-4 text-zinc-300 text-sm leading-relaxed">
+                          {faq.answer}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
-        </div>
-      </section>
-      <section className="relative px-4 md:px-10 py-10">
-        <div className="mx-auto max-w-4xl">
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-4">
-              <div className="h-px w-20 bg-[#C1121F]" />
+        </section>
 
-              <p className="text-sm font-semibold uppercase tracking-[0.45em] text-[#C1121F]">
-                Frequently Asked Questions
+        {/* ================================================== */}
+        {/* SECTION 6 — WHY REACH OUT? */}
+        {/* ================================================== */}
+        <section className="py-12 md:py-16 border-t border-zinc-800/60">
+          <div className="text-center max-w-3xl mx-auto mb-10">
+            <div className="inline-flex items-center justify-center gap-2 text-[#C1121F] font-semibold text-xs sm:text-sm tracking-[0.2em] uppercase">
+              <div className="h-px w-6 bg-[#C1121F]" />
+              <span>WHY REACH OUT?</span>
+              <div className="h-px w-6 bg-[#C1121F]" />
+            </div>
+            <h2 className="mt-3 text-2xl sm:text-4xl font-bold text-white">
+              We're Always Listening.
+            </h2>
+            <p className="mt-2 text-zinc-400 text-sm sm:text-base">
+              Every message helps us improve CineVerse and create a better
+              experience for movie lovers.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Card 1 */}
+            <div className="group rounded-2xl bg-[#27272a]/40 border border-white/5 p-6 transition-all duration-300 hover:border-[#C1121F]/40 hover:-translate-y-1">
+              <div className="w-12 h-12 rounded-xl bg-[#C1121F]/15 flex items-center justify-center text-[#C1121F] mb-4">
+                <IoChatbubbleEllipses size={24} />
+              </div>
+              <h3 className="text-lg font-bold text-white">Feedback Matters</h3>
+              <p className="mt-2 text-zinc-400 text-sm leading-relaxed">
+                Your suggestions help shape future CineVerse updates.
               </p>
             </div>
 
-            <h2 className="mt-6 text-xl md:text-3xl md:text-5xl font-bold leading-[1.15] text-white">
-              Answers Before
-              <br />
-              You Even Ask.
+            {/* Card 2 */}
+            <div className="group rounded-2xl bg-[#27272a]/40 border border-white/5 p-6 transition-all duration-300 hover:border-[#C1121F]/40 hover:-translate-y-1">
+              <div className="w-12 h-12 rounded-xl bg-[#C1121F]/15 flex items-center justify-center text-[#C1121F] mb-4">
+                <MdReportProblem size={24} />
+              </div>
+              <h3 className="text-lg font-bold text-white">Report Issues</h3>
+              <p className="mt-2 text-zinc-400 text-sm leading-relaxed">
+                Found a bug or incorrect information? We'll investigate.
+              </p>
+            </div>
+
+            {/* Card 3 */}
+            <div className="group rounded-2xl bg-[#27272a]/40 border border-white/5 p-6 transition-all duration-300 hover:border-[#C1121F]/40 hover:-translate-y-1">
+              <div className="w-12 h-12 rounded-xl bg-[#C1121F]/15 flex items-center justify-center text-[#C1121F] mb-4">
+                <MdHandshake size={24} />
+              </div>
+              <h3 className="text-lg font-bold text-white">
+                Partnership Opportunities
+              </h3>
+              <p className="mt-2 text-zinc-400 text-sm leading-relaxed">
+                Interested in collaboration or integration opportunities? Let's
+                connect.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ================================================== */}
+        {/* SECTION 7 — FINAL CTA */}
+        {/* ================================================== */}
+        <section className="relative py-14 md:py-20 my-8 overflow-hidden rounded-3xl bg-gradient-to-br from-[#C1121F]/10 to-transparent border border-white/10 text-center px-6 sm:px-12">
+          {/* Ambient Glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[250px] bg-[#C1121F]/15 blur-[120px] rounded-full pointer-events-none" />
+
+          <div className="relative z-10 max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-2 text-[#C1121F] font-semibold text-xs sm:text-sm tracking-[0.2em] uppercase mb-3">
+              <IoSparkles size={16} />
+              <span>START DISCOVERING</span>
+            </div>
+
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white leading-tight">
+              Your Next Favorite Story Is Waiting.
             </h2>
 
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-9 text-zinc-300">
-              Here are some of the questions we receive most often. If you still
-              need help, we're always happy to hear from you.
+            <p className="mt-4 max-w-xl mx-auto text-sm sm:text-base text-zinc-300 leading-relaxed">
+              Explore thousands of movies, TV shows, actors, creators, and trailers
+              from around the world.
             </p>
-          </div>
 
-          <div className="mt-16 space-y-5">
-            {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className={`overflow-hidden rounded-2xl border bg-zinc-900/60 transition-all duration-300 hover:bg-zinc-900 ${
-                  openFAQ === index
-                    ? "border-[#C1121F]/40"
-                    : "border-zinc-800 hover:border-zinc-700"
-                }`}
+            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <button
+                onClick={() => navigate("/movies")}
+                className="group flex items-center justify-center gap-3 w-full sm:w-auto px-7 py-3.5 rounded-xl bg-[#C1121F] hover:bg-[#A50F1A] text-white font-semibold text-base transition-all duration-300 active:scale-95 cursor-pointer"
               >
-                <button
-                  onClick={() => toggleFAQ(index)}
-                  className="flex w-full cursor-pointer items-center justify-between p-6 text-left"
-                >
-                  <h3 className="text-xl font-semibold text-white">
-                    {faq.question}
-                  </h3>
+                <MdMovie size={20} />
+                <span>Explore Movies</span>
+              </button>
 
-                  <div
-                    className={`flex h-10 w-10 items-center justify-center rounded-full bg-[#C1121F]/10 text-[#C1121F] transition-transform duration-300 ${
-                      openFAQ === index ? "rotate-45" : ""
-                    }`}
-                  >
-                    <FiPlus size={18} />
-                  </div>
-                </button>
-
-                <div
-                  className={`grid transition-all duration-300 ease-in-out ${
-                    openFAQ === index
-                      ? "grid-rows-[1fr] opacity-100"
-                      : "grid-rows-[0fr] opacity-0"
-                  }`}
-                >
-                  <div className="overflow-hidden">
-                    <p className="px-6 pb-6 leading-8 text-zinc-400">
-                      {faq.answer}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
+              <button
+                onClick={() => navigate("/tv-shows")}
+                className="group flex items-center justify-center gap-3 w-full sm:w-auto px-7 py-3.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-base border border-zinc-700/60 transition-all duration-300 active:scale-95 cursor-pointer"
+              >
+                <PiTelevisionFill size={20} />
+                <span>Browse TV Shows</span>
+              </button>
+            </div>
           </div>
-        </div>
-      </section>
-      <section className="relative overflow-hidden px-4 md:px-10 py-15">
-        <div className="absolute inset-0 flex justify-center pointer-events-none">
-          <div className="h-[500px] w-[500px] rounded-full bg-[#C1121F]/8 blur-[180px]" />
-        </div>
-
-        <div className="relative z-10 mx-auto max-w-3xl text-center">
-          <div className="flex items-center justify-center gap-4">
-            <div className="h-px w-20 bg-[#C1121F]" />
-
-            <p className="text-sm font-semibold uppercase tracking-[0.45em] text-[#C1121F]">
-              Thank You
-            </p>
-
-            <div className="h-px w-20 bg-[#C1121F]" />
-          </div>
-
-          <h2 className="mt-6 text-xl md:text-3xl md:text-5xl font-bold leading-[1.15] text-white">
-            Every Great Story
-            <br />
-            Begins With A Conversation.
-          </h2>
-
-          <p className="mx-auto mt-8 max-w-2xl text-lg leading-9 text-zinc-300">
-            Whether you're sharing feedback, reporting an issue, or simply saying hello, every message helps us improve CineVerse and create an even better experience for movie lovers everywhere.
-          </p>
-
-          <div className="mt-12 flex items-center justify-center gap-5">
-            <div className="h-px w-16 bg-zinc-700" />
-
-            <span className="text-xs uppercase tracking-[0.45em] text-zinc-500">
-              CINEVERSE
-            </span>
-
-            <div className="h-px w-16 bg-zinc-700" />
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
   );
 };
