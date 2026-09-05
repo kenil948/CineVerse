@@ -28,7 +28,7 @@ const PersonFilmography = ({
           {department === "Directing" ? "Directed Works" : "Filmography"}
         </h2>
 
-        <div className="bg-zinc-900/60 border border-[#C1121F]/20 rounded-2xl md:rounded-3xl p-8 sm:p-12 text-center flex flex-col items-center justify-center">
+        <div className="bg-zinc-900/60 border border-zinc-800 rounded-2xl md:rounded-3xl p-8 sm:p-12 text-center flex flex-col items-center justify-center">
           <div className="w-16 h-16 rounded-full bg-[#C1121F]/10 border border-[#C1121F]/30 flex items-center justify-center mb-4">
             <FaFilm size={28} className="text-[#C1121F]" />
           </div>
