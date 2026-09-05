@@ -41,7 +41,6 @@ export const getTv = (id) => async (dispatch) => {
       cast: credits.data.cast || [],
       director,
     };
-    console.log(theUltimateTv);
 
     dispatch(loadtv(theUltimateTv));
   } catch (error) {

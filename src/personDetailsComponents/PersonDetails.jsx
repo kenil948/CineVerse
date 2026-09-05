@@ -22,7 +22,6 @@ const PersonDetails = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.state);
 
   const { info, loading, error } = useSelector((state) => state.person);
 
