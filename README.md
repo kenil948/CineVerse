@@ -74,31 +74,31 @@ https://github.com/kenil948/CineVerse
 
 ### Home Page
 
-![Home Page](./screenshots/home.png)
+![Home Page](./screenshots/home.jpg)
 
 ### Movie Details
 
-![Movie Details](./screenshots/movie-details.png)
+![Movie Details](./screenshots/movie-details.jpg)
 
 ### Person Details
 
-![Person Details](./screenshots/person-details.png)
+![Person Details](./screenshots/person-details.jpg)
 
 ### Trailer Modal
 
-![Trailer Modal](./screenshots/trailer-modal.png)
+![Trailer Modal](./screenshots/trailer-modal.jpg)
 
 ### About Page
 
-![About Page](./screenshots/about-page.png)
+![About Page](./screenshots/about-page.jpg)
 
 ### Contact Page
 
-![Contact Page](./screenshots/contact-page.png)
+![Contact Page](./screenshots/contact-page.jpg)
 
 ### Mobile Responsive View
 
-![Mobile View](./screenshots/mobile-home.png)
+![Mobile View](./screenshots/mobile-home.jpg)
 
 ---
 
