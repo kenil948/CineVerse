@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { FaFilm } from "react-icons/fa";
 import HorizontalCards from "../components/templates/HorizontalCards";
 
 const PersonFilmography = ({
@@ -11,13 +12,38 @@ const PersonFilmography = ({
 }) => {
   const [activeTab, setActiveTab] = useState("movie");
   const movieData = department === "Directing" ? directedMovies : movies;
-
   const tvData = department === "Directing" ? directedTvShows : tvShows;
+
+  const totalCredits = movieData.length + tvData.length;
+
   const currentData = useMemo(() => {
     const data = activeTab === "movie" ? movieData : tvData;
-
     return [...data].sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
   }, [activeTab, movieData, tvData]);
+
+  if (totalCredits === 0) {
+    return (
+      <section className="px-4 md:px-10 pt-5">
+        <h2 className="text-2xl md:text-4xl font-black text-white mb-6">
+          {department === "Directing" ? "Directed Works" : "Filmography"}
+        </h2>
+
+        <div className="bg-zinc-900/60 border border-[#C1121F]/20 rounded-2xl md:rounded-3xl p-8 sm:p-12 text-center flex flex-col items-center justify-center">
+          <div className="w-16 h-16 rounded-full bg-[#C1121F]/10 border border-[#C1121F]/30 flex items-center justify-center mb-4">
+            <FaFilm size={28} className="text-[#C1121F]" />
+          </div>
+
+          <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
+            No Credits Available
+          </h3>
+
+          <p className="text-zinc-400 text-sm sm:text-base max-w-md leading-relaxed">
+            No film or television credits are currently available.
+          </p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="px-4 md:px-10 pt-5">

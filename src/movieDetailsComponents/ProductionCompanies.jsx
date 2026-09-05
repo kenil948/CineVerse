@@ -17,10 +17,21 @@ const ProductionCompanies = ({ companies }) => {
               <img
                 src={`https://image.tmdb.org/t/p/w500${company.logo_path}`}
                 alt={company.name}
+                onError={(e) => {
+                  e.currentTarget.style.display = "none";
+                  if (e.currentTarget.nextSibling) {
+                    e.currentTarget.nextSibling.style.display = "flex";
+                  }
+                }}
                 className="h-12 sm:h-16 max-w-[140px] sm:max-w-[180px] object-contain mb-3 sm:mb-5"
               />
-            ) : (
-              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-zinc-800 flex items-center justify-center mb-3 sm:mb-5">
+            ) : null}
+
+            {(!company.logo_path || true) && (
+              <div
+                style={{ display: company.logo_path ? "none" : "flex" }}
+                className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-zinc-800 flex items-center justify-center mb-3 sm:mb-5"
+              >
                 <FaFilm className="text-xl sm:text-2xl text-zinc-400" />
               </div>
             )}

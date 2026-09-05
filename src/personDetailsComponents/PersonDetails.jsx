@@ -46,18 +46,9 @@ const PersonDetails = () => {
     <>
       <div
         style={{
-          backgroundImage: `
-             linear-gradient(
-  90deg,
-  rgba(0,0,0,.80) 0%,
-  rgba(0,0,0,.80) 30%,
-  rgba(0,0,0,.80) 60%,
-  rgba(0,0,0,.80) 100%
-),
-             url(https://image.tmdb.org/t/p/original${
-               info.details.profile_path
-             })
-`,
+          backgroundImage: info.details.profile_path
+            ? `linear-gradient(90deg, rgba(0,0,0,.80) 0%, rgba(0,0,0,.80) 30%, rgba(0,0,0,.80) 60%, rgba(0,0,0,.80) 100%), url(https://image.tmdb.org/t/p/original${info.details.profile_path})`
+            : "radial-gradient(ellipse at top, #27272a 0%, #18181b 70%)",
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
