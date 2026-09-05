@@ -49,10 +49,10 @@ const PersonDetails = () => {
           backgroundImage: `
              linear-gradient(
   90deg,
-  rgba(0,0,0,.97) 0%,
-  rgba(0,0,0,.94) 30%,
-  rgba(0,0,0,.85) 60%,
-  rgba(0,0,0,.97) 100%
+  rgba(0,0,0,.80) 0%,
+  rgba(0,0,0,.80) 30%,
+  rgba(0,0,0,.80) 60%,
+  rgba(0,0,0,.80) 100%
 ),
              url(https://image.tmdb.org/t/p/original${
                info.details.profile_path

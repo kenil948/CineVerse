@@ -4,7 +4,7 @@ const ProductionCompanies = ({ companies }) => {
   if (!companies?.length) return null;
 
   return (
-    <section className="mt-0">
+    <section className="mt-3">
       <h2 className="text-2xl md:text-4xl font-bold mb-8">Production Companies</h2>
 
       <div className="flex overflow-x-auto p-2 gap-4 md:gap-6 scrollbar-none">

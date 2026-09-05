@@ -69,10 +69,10 @@ const TvDetails = () => {
           backgroundImage: `
               linear-gradient(
               90deg,
-             rgba(0,0,0,.85) 0%,
-             rgba(0,0,0,.85) 35%,
-             rgba(0,0,0,.85) 65%,
-             rgba(0,0,0,.85) 100%
+             rgba(0,0,0,.80) 0%,
+             rgba(0,0,0,.80) 35%,
+             rgba(0,0,0,.80) 65%,
+             rgba(0,0,0,.80) 100%
                   
               ),
              url(https://image.tmdb.org/t/p/original${
